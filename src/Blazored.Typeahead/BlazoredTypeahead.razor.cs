@@ -174,7 +174,7 @@ namespace Blazored.Typeahead
 
         private async Task HandleClickOnMask()
         {
-            SearchText = "";
+            // SearchText = "";
             IsShowingMask = false;
 
             await Task.Delay(250); // Possible race condition here.
@@ -329,7 +329,17 @@ namespace Blazored.Typeahead
 
             if (IsShowingSuggestions)
             {
-                SearchText = "";
+                // SearchText = "";
+                if (!IsMultiselect)
+                {
+                    if (string.IsNullOrEmpty(_searchText))
+                    {
+                        if (!string.IsNullOrEmpty(Value.ToString()))
+                        {
+                            _searchText = Value.ToString();
+                        }
+                    }
+                }
                 IsSearching = true;
                 await InvokeAsync(StateHasChanged);
 
